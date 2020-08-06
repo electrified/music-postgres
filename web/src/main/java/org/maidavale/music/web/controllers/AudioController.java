@@ -11,12 +11,13 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import static java.net.URLConnection.guessContentTypeFromName;
 import static org.apache.commons.io.IOUtils.copy;
 
 //@PreAuthorize("principal.claims['groups'].contains('listeners')")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3020")
 @RestController
 @RequestMapping("/audio")
 public class AudioController {
@@ -27,7 +28,7 @@ public class AudioController {
     }
 
     @RequestMapping(value ="/play/{id}") //, produces = "audio/*"
-    public void play(@PathVariable(value="id") final Long id, final HttpServletResponse response) throws IOException {
+    public void play(@PathVariable(value="id") final UUID id, final HttpServletResponse response) throws IOException {
         var audioFile = audioFileService.getFileByTrackId(id);
 
         if (audioFile.isPresent()) {
@@ -42,7 +43,7 @@ public class AudioController {
 
             response.setContentType(mimeType);
 
-            response.setHeader("Content-Disposition", String.format("inline; filename=\"%d\"", id));
+            response.setHeader("Content-Disposition", String.format("inline; filename=\"%s\"", id.toString()));
 
 //        response.setContentLength((int) path.length());
 

@@ -1,1 +1,1 @@
-include 'persistence', 'web'
+include 'org.maidavale.music.persistence', 'web'

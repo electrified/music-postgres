@@ -4,12 +4,15 @@ services:
 #    build: .
 #    ports:
 #    - "5000:5000"
-  neo4j:
-    image: "neo4j:3.4"
-    ports:
-    - "7474:7474"
-    - "7687:7687"
-    volumes:
-      - "./data:$HOME/neo4j/data"
+  db:
+    image: postgres
+    restart: always
     environment:
-      - NEO4J_AUTH=none
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

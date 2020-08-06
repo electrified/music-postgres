@@ -7,7 +7,7 @@ apply plugin: 'io.spring.dependency-management'
 def springSecurityVersion = '5.3.3.RELEASE'
 
 dependencies {
-    compile project(':persistence')
+//    compile project(':org.maidavale.music.persistence')
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
@@ -25,7 +25,29 @@ dependencies {
         exclude group: 'com.google.code.findbugs', module: 'jsr305'
     }
     compile group: 'commons-io', name: 'commons-io', version: '2.7'
-    testCompile group: 'junit', name: 'junit', version: '4.13'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    runtimeOnly 'org.flywaydb:flyway-core:6.4.2'
+    testRuntimeOnly'com.h2database:h2:1.4.200'
+    implementation 'org.postgresql:postgresql:42.2.12'
+
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.3.2.RELEASE'
+
+
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.11.1'
+
+//    implementation group: 'javax.org.maidavale.music.persistence', name: 'javax.org.maidavale.music.persistence-api', version: '2.2'
+
+    implementation 'com.mpatric:mp3agic:0.9.1'
+    implementation (group: 'com.google.guava', name: 'guava', version: '29.0-jre') {
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    }
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+
 }
 
 ext.moduleName = 'org.maidavale.music.web'
